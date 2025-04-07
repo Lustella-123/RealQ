@@ -5,6 +5,7 @@ import com.example.realq.domain.user.dto.request.UserSignUpRequest;
 import com.example.realq.domain.user.dto.response.UserLoginResponse;
 import com.example.realq.domain.user.dto.response.UserSignUpResponse;
 import com.example.realq.domain.user.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +30,11 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userRequest) {
-
-        UserLoginResponse userLoginResponse = userService.Login(userRequest);
+    public ResponseEntity<UserLoginResponse> login(
+            @RequestBody UserLoginRequest userRequest,
+            HttpSession session
+    ) {
+        UserLoginResponse userLoginResponse = userService.Login(userRequest, session);
 
         return new ResponseEntity<>(userLoginResponse, HttpStatus.OK);
     }

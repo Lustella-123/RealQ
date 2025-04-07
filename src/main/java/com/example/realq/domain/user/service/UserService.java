@@ -8,6 +8,7 @@ import com.example.realq.domain.user.entity.User;
 import com.example.realq.domain.user.repository.UserRepository;
 import com.example.realq.global.error.ErrorCode;
 import com.example.realq.global.error.GlobalException;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +28,15 @@ public class UserService {
         return UserSignUpResponse.toDto();
     }
 
-    public UserLoginResponse Login(UserLoginRequest userRequest) {
+    public UserLoginResponse Login(UserLoginRequest userRequest, HttpSession session) {
         User user = userRepository.findByEmail(userRequest.email())
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
         if (!user.getPassword().equals(userRequest.password())) {
             throw new GlobalException(ErrorCode.INVALID_PASSWORD);
         }
+
+        session.setAttribute("email", user.getEmail());
 
         return UserLoginResponse.toDto();
     }
