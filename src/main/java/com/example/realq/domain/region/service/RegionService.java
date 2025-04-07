@@ -8,9 +8,12 @@ import com.example.realq.global.error.ErrorCode;
 import com.example.realq.global.error.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.List;
 public class RegionService {
 
     private final WebClient webClient;
+    private final RestTemplate restTemplate;
 
     @Value("${airkorea.api.service-key}")
     private String serviceKey;
@@ -28,22 +32,33 @@ public class RegionService {
         try {
             String encodedRegion = URLEncoder.encode(region, StandardCharsets.UTF_8);
 
-            RegionWrapper responseWrapper = webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .scheme("http")
-                            .host("apis.data.go.kr")
-                            .path("/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty")
-                            .queryParam("sidoName", encodedRegion)
-                            .queryParam("returnType", "json")
-                            .queryParam("serviceKey", serviceKey)
-                            .queryParam("ver", "1.0")
-                            .build())
-                    .retrieve()
-                    .bodyToMono(RegionWrapper.class)
-                    .block();
+            String rawUrl = String.format(
+                    "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty" +
+                            "?sidoName=%s&returnType=json&serviceKey=%s&ver=1.0",
+                    encodedRegion, serviceKey
+            );
 
-            RegionResponseBody responseBody = responseWrapper.response();
+            URI uri = new URI(rawUrl);
+            ResponseEntity<RegionWrapper> response = restTemplate.getForEntity(uri, RegionWrapper.class);
+            RegionResponseBody responseBody = response.getBody().response();
             List<RegionItem> items = responseBody.body().items();
+
+//            RegionWrapper responseWrapper = webClient.get()
+//                    .uri(uriBuilder -> uriBuilder
+//                            .scheme("http")
+//                            .host("apis.data.go.kr")
+//                            .path("/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty")
+//                            .queryParam("sidoName", encodedRegion)
+//                            .queryParam("returnType", "json")
+//                            .queryParam("serviceKey", serviceKey)
+//                            .queryParam("ver", "1.0")
+//                            .build())
+//                    .retrieve()
+//                    .bodyToMono(RegionWrapper.class)
+//                    .block();
+
+//            RegionResponseBody responseBody = responseWrapper.response();
+//            List<RegionItem> items = responseBody.body().items();
 
             int count = 0;
             double pm10Sum = 0, pm25Sum = 0, o3Sum = 0, no2Sum = 0, coSum = 0, so2Sum = 0;
