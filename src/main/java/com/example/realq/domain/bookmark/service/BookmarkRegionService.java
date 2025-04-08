@@ -74,17 +74,15 @@ public class BookmarkRegionService {
 
         return bookmarkRegionList.stream()
                 .map(bookmarkRegion -> BookmarkRegionReadResponse.toDto(
-                                bookmarkRegion.getId(),
-                                bookmarkRegion.getRegion().getId(),
-                                bookmarkRegion.getRegion().getName()
-                        )
-                ).toList();
+                        bookmarkRegion.getId(),
+                        bookmarkRegion.getRegion().getId(),
+                        bookmarkRegion.getRegion().getName()
+                )).toList();
     }
 
     @Transactional
-    public void deleteBookmarkRegion(
-            List<Long> bookmarkRegionIdList
-    ) {
+    public void deleteBookmarkRegion(List<Long> bookmarkRegionIdList) {
+
         bookmarkRegionIdList.forEach(id -> {
             Optional<BookmarkRegion> existingBookmarkRegion = bookmarkRegionRepository.findById(id);
 
