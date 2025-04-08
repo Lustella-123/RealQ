@@ -1,5 +1,6 @@
 package com.example.realq.domain.bookmark.entity;
 
+import com.example.realq.domain.region.entity.Region;
 import com.example.realq.domain.station.entity.Station;
 import com.example.realq.domain.user.entity.User;
 import jakarta.persistence.*;
@@ -23,6 +24,10 @@ public class BookmarkStation {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    private Region region;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "station_id")
     private Station station;
 
@@ -33,6 +38,7 @@ public class BookmarkStation {
         BookmarkStation bookmarkStation = new BookmarkStation();
         bookmarkStation.user = user;
         bookmarkStation.station = station;
+        bookmarkStation.region = station.getRegion();
         return bookmarkStation;
     }
 }
