@@ -21,6 +21,7 @@ public enum ErrorCode {
 
     // 지역/대기질 관련
     REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 지역 정보를 찾을 수 없습니다."),
+    STATION_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 측정소 정보를 찾을 수 없습니다."),
     AIR_QUALITY_NOT_AVAILABLE(HttpStatus.NOT_FOUND, "대기질 데이터가 없습니다.");
 
     private final HttpStatus httpStatus;
