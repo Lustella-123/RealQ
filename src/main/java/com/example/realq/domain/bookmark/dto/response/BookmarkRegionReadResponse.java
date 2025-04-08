@@ -1,15 +1,17 @@
 package com.example.realq.domain.bookmark.dto.response;
 
-public record BookmarkRegionReadResponse (
+import com.example.realq.domain.bookmark.entity.BookmarkRegion;
+
+public record BookmarkRegionReadResponse(
         Long id,
         Long regionId,
         String regionName
 ) {
-    public static BookmarkRegionReadResponse toDto(
-            Long id,
-            Long regionId,
-            String regionName
-    ) {
-     return new BookmarkRegionReadResponse(id, regionId, regionName);
+    public static BookmarkRegionReadResponse toDto(BookmarkRegion bookmarkRegion) {
+        return new BookmarkRegionReadResponse(
+                bookmarkRegion.getId(),
+                bookmarkRegion.getRegion().getId(),
+                bookmarkRegion.getRegion().getName()
+        );
     }
 }

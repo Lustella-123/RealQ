@@ -47,26 +47,14 @@ public class BookmarkStationService {
         );
 
         if (existingBookmarkStation.isPresent()) {
-            return BookmarkStationCreateResponse.toDto(
-                    existingBookmarkStation.get().getId(),
-                    existingBookmarkStation.get().getStation().getId(),
-                    existingBookmarkStation.get().getStation().getName(),
-                    existingBookmarkStation.get().getRegion().getId(),
-                    existingBookmarkStation.get().getRegion().getName()
-            );
+            return BookmarkStationCreateResponse.toDto(existingBookmarkStation.get());
         }
 
         BookmarkStation bookmarkStation = BookmarkStation.toEntity(user, station);
 
         bookmarkStationRepository.save(bookmarkStation);
 
-        return BookmarkStationCreateResponse.toDto(
-                bookmarkStation.getId(),
-                bookmarkStation.getStation().getId(),
-                bookmarkStation.getStation().getName(),
-                bookmarkStation.getRegion().getId(),
-                bookmarkStation.getRegion().getName()
-        );
+        return BookmarkStationCreateResponse.toDto(bookmarkStation);
     }
 
     @Transactional(readOnly = true)
@@ -76,14 +64,7 @@ public class BookmarkStationService {
 
         List<BookmarkStation> bookmarkStationList = bookmarkStationRepository.findByUserEmail(email);
 
-        return bookmarkStationList.stream()
-                .map(bookmarkStation -> BookmarkStationReadResponse.toDto(
-                        bookmarkStation.getId(),
-                        bookmarkStation.getStation().getId(),
-                        bookmarkStation.getStation().getName(),
-                        bookmarkStation.getRegion().getId(),
-                        bookmarkStation.getRegion().getName()
-                )).toList();
+        return bookmarkStationList.stream().map(BookmarkStationReadResponse::toDto).toList();
     }
 
     @Transactional

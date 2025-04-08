@@ -47,22 +47,14 @@ public class BookmarkRegionService {
         );
 
         if (existingBookmarkRegion.isPresent()) {
-            return BookmarkRegionCreateResponse.toDto(
-                    existingBookmarkRegion.get().getId(),
-                    existingBookmarkRegion.get().getRegion().getId(),
-                    existingBookmarkRegion.get().getRegion().getName()
-            );
+            return BookmarkRegionCreateResponse.toDto(existingBookmarkRegion.get());
         }
 
         BookmarkRegion bookmarkRegion = BookmarkRegion.toEntity(user, region);
 
         bookmarkRegionRepository.save(bookmarkRegion);
 
-        return BookmarkRegionCreateResponse.toDto(
-                bookmarkRegion.getId(),
-                bookmarkRegion.getRegion().getId(),
-                bookmarkRegion.getRegion().getName()
-        );
+        return BookmarkRegionCreateResponse.toDto(bookmarkRegion);
     }
 
     @Transactional(readOnly = true)
@@ -72,12 +64,7 @@ public class BookmarkRegionService {
 
         List<BookmarkRegion> bookmarkRegionList = bookmarkRegionRepository.findByUserEmail(email);
 
-        return bookmarkRegionList.stream()
-                .map(bookmarkRegion -> BookmarkRegionReadResponse.toDto(
-                        bookmarkRegion.getId(),
-                        bookmarkRegion.getRegion().getId(),
-                        bookmarkRegion.getRegion().getName()
-                )).toList();
+        return bookmarkRegionList.stream().map(BookmarkRegionReadResponse::toDto).toList();
     }
 
     @Transactional
