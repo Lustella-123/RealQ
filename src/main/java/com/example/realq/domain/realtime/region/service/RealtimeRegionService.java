@@ -1,8 +1,8 @@
 package com.example.realq.domain.realtime.region.service;
 
-import com.example.realq.domain.realtime.region.client.RegionApiClient;
-import com.example.realq.domain.realtime.region.dto.response.RegionItem;
-import com.example.realq.domain.realtime.region.dto.response.RegionResponse;
+import com.example.realq.domain.realtime.region.client.RealtimeRegionApiClient;
+import com.example.realq.domain.realtime.region.dto.response.RealtimeRegionItem;
+import com.example.realq.domain.realtime.region.dto.response.RealtimeRegionResponse;
 import com.example.realq.global.error.ErrorCode;
 import com.example.realq.global.error.GlobalException;
 import lombok.RequiredArgsConstructor;
@@ -13,19 +13,19 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class RegionService {
+public class RealtimeRegionService {
 
-    private final RegionApiClient apiClient;
+    private final RealtimeRegionApiClient apiClient;
 
-    public List<RegionResponse> getByRegion(String region) {
-        List<RegionItem> items = apiClient.getRegionData(region);
+    public List<RealtimeRegionResponse> getByRegion(String region) {
+        List<RealtimeRegionItem> items = apiClient.getRegionData(region);
 
         if (items.isEmpty()) {
             throw new GlobalException(ErrorCode.AIR_QUALITY_NOT_AVAILABLE);
         }
 
         return items.stream()
-                .map(item -> new RegionResponse(
+                .map(item -> new RealtimeRegionResponse(
                         item.stationName(),
                         item.dataTime(),
                         Double.parseDouble(item.pm10Value()),

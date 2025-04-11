@@ -1,6 +1,6 @@
 package com.example.realq.domain.realtime.region.dto.response;
 
-public record RegionItem(
+public record RealtimeRegionItem(
         String stationName,
         String dataTime,
         String pm10Value,

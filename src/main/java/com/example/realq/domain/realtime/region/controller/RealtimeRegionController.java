@@ -1,7 +1,7 @@
 package com.example.realq.domain.realtime.region.controller;
 
-import com.example.realq.domain.realtime.region.dto.response.RegionResponse;
-import com.example.realq.domain.realtime.region.service.RegionService;
+import com.example.realq.domain.realtime.region.dto.response.RealtimeRegionResponse;
+import com.example.realq.domain.realtime.region.service.RealtimeRegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/regions")
 @RequiredArgsConstructor
-public class RegionController {
+public class RealtimeRegionController {
 
-    private final RegionService regionService;
+    private final RealtimeRegionService regionService;
 
     @GetMapping
-    public ResponseEntity<List<RegionResponse>> getByRegion(@RequestParam("region") String region) {
+    public ResponseEntity<List<RealtimeRegionResponse>> getByRegion(@RequestParam("region") String region) {
         return new ResponseEntity<>(regionService.getByRegion(region), HttpStatus.OK);
     }
 }
