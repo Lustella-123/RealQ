@@ -20,6 +20,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    private String slackId;
+
     public static User toEntity(
             String email,
             String password

@@ -38,6 +38,13 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 	implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+	implementation 'org.springframework.boot:spring-boot-starter'
+
+	// Slack bot dependencies
+	implementation("com.slack.api:bolt:1.45.3")
+	implementation("com.slack.api:bolt-servlet:1.45.3")
+	implementation("com.slack.api:bolt-jetty:1.45.3")
+	implementation("org.slf4j:slf4j-simple:1.7.36")
 }
 
 tasks.named('test') {
