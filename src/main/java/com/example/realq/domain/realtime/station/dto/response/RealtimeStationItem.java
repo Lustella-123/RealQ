@@ -2,7 +2,7 @@ package com.example.realq.domain.realtime.station.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record StationItem(
+public record RealtimeStationItem(
         @JsonProperty("stationName") String stationName,
         @JsonProperty("dataTime") String dataTime,
         @JsonProperty("pm10Value") String pm10Value,

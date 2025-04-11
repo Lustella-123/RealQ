@@ -1,6 +1,6 @@
 package com.example.realq.domain.realtime.station.dto.response;
 
-public record StationResponse(
+public record RealtimeStationResponse(
         String stationName,
         String dataTime,
         double pm10,

@@ -1,8 +1,8 @@
 package com.example.realq.domain.realtime.station.service;
 
-import com.example.realq.domain.realtime.station.client.StationApiClient;
-import com.example.realq.domain.realtime.station.dto.response.StationItem;
-import com.example.realq.domain.realtime.station.dto.response.StationResponse;
+import com.example.realq.domain.realtime.station.client.RealtimeStationApiClient;
+import com.example.realq.domain.realtime.station.dto.response.RealtimeStationItem;
+import com.example.realq.domain.realtime.station.dto.response.RealtimeStationResponse;
 import com.example.realq.global.error.ErrorCode;
 import com.example.realq.global.error.GlobalException;
 import lombok.RequiredArgsConstructor;
@@ -10,20 +10,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class StationService {
+public class RealtimeStationService {
 
-    private final StationApiClient apiClient;
+    private final RealtimeStationApiClient apiClient;
 
-    public StationResponse getByStation(String station) {
-        StationItem[] items = apiClient.getStationData(station);
+    public RealtimeStationResponse getByStation(String station) {
+        RealtimeStationItem[] items = apiClient.getStationData(station);
 
         if (items.length == 0) {
             throw new GlobalException(ErrorCode.AIR_QUALITY_NOT_AVAILABLE);
         }
 
-        StationItem item = items[0];
+        RealtimeStationItem item = items[0];
 
-        return new StationResponse(
+        return new RealtimeStationResponse(
                 item.stationName(),
                 item.dataTime(),
                 Double.parseDouble(item.pm10Value()),
