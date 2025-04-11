@@ -5,8 +5,8 @@ import com.example.realq.domain.bookmark.dto.response.BookmarkStationCreateRespo
 import com.example.realq.domain.bookmark.dto.response.BookmarkStationReadResponse;
 import com.example.realq.domain.bookmark.entity.BookmarkStation;
 import com.example.realq.domain.bookmark.repository.BookmarkStationRepository;
-import com.example.realq.domain.station.entity.Station;
-import com.example.realq.domain.station.repository.StationRepository;
+import com.example.realq.domain.realtime.station.entity.Station;
+import com.example.realq.domain.realtime.station.repository.StationRepository;
 import com.example.realq.domain.user.entity.User;
 import com.example.realq.domain.user.repository.UserRepository;
 import com.example.realq.global.error.ErrorCode;

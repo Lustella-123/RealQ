@@ -1,6 +1,6 @@
 package com.example.realq.domain.notificationpm25.entity;
 
-import com.example.realq.domain.station.entity.Station;
+import com.example.realq.domain.realtime.station.entity.Station;
 import com.example.realq.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -7,8 +7,8 @@ import com.example.realq.domain.notificationpm10.dto.response.NotificationPm10Pa
 import com.example.realq.domain.notificationpm10.dto.response.NotificationPm10ReadResponse;
 import com.example.realq.domain.notificationpm10.entity.NotificationPm10;
 import com.example.realq.domain.notificationpm10.repository.NotificationPm10Repository;
-import com.example.realq.domain.station.entity.Station;
-import com.example.realq.domain.station.repository.StationRepository;
+import com.example.realq.domain.realtime.station.entity.Station;
+import com.example.realq.domain.realtime.station.repository.StationRepository;
 import com.example.realq.domain.user.entity.User;
 import com.example.realq.domain.user.repository.UserRepository;
 import com.example.realq.global.error.ErrorCode;
