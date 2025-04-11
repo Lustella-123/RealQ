@@ -1,7 +1,7 @@
 package com.example.realq.domain.bookmark.entity;
 
-import com.example.realq.domain.region.entity.Region;
-import com.example.realq.domain.station.entity.Station;
+import com.example.realq.domain.realtime.region.entity.Region;
+import com.example.realq.domain.realtime.station.entity.Station;
 import com.example.realq.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;

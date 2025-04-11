@@ -1,12 +1,11 @@
 package com.example.realq.domain.notificationpm10.entity;
 
-import com.example.realq.domain.station.entity.Station;
+import com.example.realq.domain.realtime.station.entity.Station;
 import com.example.realq.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
