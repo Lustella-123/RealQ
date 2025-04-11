@@ -20,6 +20,7 @@ public enum ErrorCode {
     FORBIDDEN(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
 
     // 지역/대기질 관련
+    DISTRICT_API_ERROR(HttpStatus.BAD_REQUEST, "시군구별 실시간 평균정보 조회 중 오류가 발생했습니다."),
     REGION_API_ERROR(HttpStatus.BAD_REQUEST, "시도별 실시간 측정정보 조회 중 오류가 발생했습니다."),
     STATION_API_ERROR(HttpStatus.BAD_REQUEST, "측정소별 실시간 측정정보 조회 중 오류가 발생했습니다."),
     REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 지역 정보를 찾을 수 없습니다."),

@@ -1,8 +1,6 @@
-package com.example.realq.domain.realtime.station.dto.response;
+package com.example.realq.domain.average.district.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public record RealtimeStationItem(
+public record AverageDistrictItem(
         String stationName,
         String dataTime,
         String pm10Value,
