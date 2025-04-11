@@ -1,5 +1,7 @@
 package com.example.realq.domain.realtime.region.client;
 
+import com.example.realq.domain.realtime.region.dto.response.RealtimeRegionItem;
+import com.example.realq.domain.realtime.region.dto.response.RealtimeRegionWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -19,7 +21,7 @@ public class RegionApiClient {
     @Value("${airkorea.api.service-key}")
     private String serviceKey;
 
-    public List<RegionItem> getRegionData(String region) {
+    public List<RealtimeRegionItem> getRegionData(String region) {
         try {
             String encodedRegion = URLEncoder.encode(region, StandardCharsets.UTF_8);
             String url = String.format(
@@ -28,7 +30,7 @@ public class RegionApiClient {
                     encodedRegion, serviceKey
             );
             URI uri = new URI(url);
-            RegionWrapper wrapper = restTemplate.getForEntity(uri, RegionWrapper.class).getBody();
+            RealtimeRegionWrapper wrapper = restTemplate.getForEntity(uri, RealtimeRegionWrapper.class).getBody();
             return wrapper.response().body().items();
         } catch (Exception e) {
             return List.of();
