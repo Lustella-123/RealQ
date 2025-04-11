@@ -1,9 +1,9 @@
 package com.example.realq.domain.realtime.station.dto.response;
 
-public record StationResponseBody(
+public record RealtimeStationResponseBody(
         StationBody body
 ) {
     public record StationBody(
-            StationItem[] items
+            RealtimeStationItem[] items
     ) {}
 }

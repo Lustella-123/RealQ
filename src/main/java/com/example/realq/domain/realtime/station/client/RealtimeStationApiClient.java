@@ -1,7 +1,7 @@
 package com.example.realq.domain.realtime.station.client;
 
-import com.example.realq.domain.realtime.station.dto.response.StationItem;
-import com.example.realq.domain.realtime.station.dto.response.StationWrapper;
+import com.example.realq.domain.realtime.station.dto.response.RealtimeStationItem;
+import com.example.realq.domain.realtime.station.dto.response.RealtimeStationWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -13,14 +13,14 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor
-public class StationApiClient {
+public class RealtimeStationApiClient {
 
     private final RestTemplate restTemplate;
 
     @Value("${airkorea.api.service-key}")
     private String serviceKey;
 
-    public StationItem[] getStationData(String station) {
+    public RealtimeStationItem[] getStationData(String station) {
         try {
             String encodedStation = URLEncoder.encode(station, StandardCharsets.UTF_8);
             String url = String.format(
@@ -29,13 +29,13 @@ public class StationApiClient {
                     encodedStation, serviceKey
             );
             URI uri = new URI(url);
-            return restTemplate.getForEntity(uri, StationWrapper.class)
+            return restTemplate.getForEntity(uri, RealtimeStationWrapper.class)
                     .getBody()
                     .response()
                     .body()
                     .items();
         } catch (Exception e) {
-            return new StationItem[0];
+            return new RealtimeStationItem[0];
         }
     }
 }
