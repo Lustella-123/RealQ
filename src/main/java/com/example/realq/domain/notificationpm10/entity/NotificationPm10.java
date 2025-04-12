@@ -4,6 +4,7 @@ import com.example.realq.domain.realtime.station.entity.Station;
 import com.example.realq.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Table(name = "notification_pm_10")
+@NoArgsConstructor
 public class NotificationPm10 {
 
     @Id
