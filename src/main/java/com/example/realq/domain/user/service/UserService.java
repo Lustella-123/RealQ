@@ -23,7 +23,7 @@ public class UserService {
             throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
         }
 
-        User user = User.toEntity(userRequest.email(), userRequest.password());
+        User user = User.toEntity(userRequest.email(), userRequest.password(), userRequest.slackId());
         userRepository.save(user);
         return UserSignUpResponse.toDto();
     }
