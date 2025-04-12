@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface NotificationPm10Repository extends JpaRepository<NotificationPm10, Long> {
 
-Optional<NotificationPm10> findByUserEmailAndStationId(String email, Long stationId);
+    Optional<NotificationPm10> findByUserEmailAndStationId(String email, Long stationId);
 
-List<NotificationPm10> findByUserEmail(String email);
+    List<NotificationPm10> findByUserEmail(String email);
 
 }
