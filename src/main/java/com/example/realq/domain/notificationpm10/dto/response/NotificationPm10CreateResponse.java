@@ -6,7 +6,7 @@ public record NotificationPm10CreateResponse(
         Long id,
         Long stationId,
         String stationName,
-        int pm10Thread
+        int pm10Threshold
 ) {
     public static NotificationPm10CreateResponse toDto(NotificationPm10 notificationPm10) {
         return new NotificationPm10CreateResponse(
