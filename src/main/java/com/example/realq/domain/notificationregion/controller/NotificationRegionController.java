@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/region/notifications")
+@RequestMapping("/api/region/notifications")
 @RequiredArgsConstructor
 public class NotificationRegionController {
 
