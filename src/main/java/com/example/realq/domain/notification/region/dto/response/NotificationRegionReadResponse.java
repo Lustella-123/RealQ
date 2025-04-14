@@ -7,7 +7,8 @@ public record NotificationRegionReadResponse(
         Long regionId,
         String regionName,
         int pm10Threshold,
-        int pm25Threshold
+        int pm25Threshold,
+        boolean enabled
 ) {
     public static NotificationRegionReadResponse toDto(NotificationRegion notificationRegion) {
         return new NotificationRegionReadResponse(
@@ -15,7 +16,8 @@ public record NotificationRegionReadResponse(
                 notificationRegion.getRegion().getId(),
                 notificationRegion.getRegion().getName(),
                 notificationRegion.getPm10Threshold(),
-                notificationRegion.getPm25Threshold()
+                notificationRegion.getPm25Threshold(),
+                notificationRegion.isEnabled()
         );
     }
 }
