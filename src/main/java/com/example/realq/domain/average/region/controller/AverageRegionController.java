@@ -1,8 +1,8 @@
-package com.example.realq.domain.average.district.controller;
+package com.example.realq.domain.average.region.controller;
 
-import com.example.realq.domain.average.district.SearchConditionEnum;
-import com.example.realq.domain.average.district.dto.response.AverageDistrictResponse;
-import com.example.realq.domain.average.district.service.AverageDistrictService;
+import com.example.realq.domain.average.region.SearchConditionEnum;
+import com.example.realq.domain.average.region.dto.response.AverageRegionResponse;
+import com.example.realq.domain.average.region.service.AverageRegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/districts")
 @RequiredArgsConstructor
-public class AverageDistrictController {
+public class AverageRegionController {
 
-    private final AverageDistrictService avgDistrictService;
+    private final AverageRegionService avgDistrictService;
 
     @GetMapping
-    public ResponseEntity<AverageDistrictResponse> getByRegion(@RequestParam("region") String region, @RequestParam("period")SearchConditionEnum period) {
+    public ResponseEntity<AverageRegionResponse> getByRegion(@RequestParam("region") String region, @RequestParam("period")SearchConditionEnum period) {
         return new ResponseEntity<>(avgDistrictService.getByRegionAndPeriod(region, period), HttpStatus.OK);
     }
 }

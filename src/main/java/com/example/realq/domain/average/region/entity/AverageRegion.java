@@ -1,4 +1,4 @@
-package com.example.realq.domain.slack.entity;
+package com.example.realq.domain.average.region.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
