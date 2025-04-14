@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/regions")
+@RequestMapping("/api/realtime/regions")
 @RequiredArgsConstructor
 public class RealtimeRegionController {
 

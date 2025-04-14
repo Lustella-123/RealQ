@@ -18,13 +18,13 @@ public class RealtimeRegionService {
     private final RealtimeRegionApiClient apiClient;
 
     public List<RealtimeRegionResponse> getByRegion(String region) {
-        List<RealtimeRegionItem> items = apiClient.getRegionData(region);
+        List<RealtimeRegionItem> realtimeRegionItems = apiClient.getRegionData(region);
 
-        if (items.isEmpty()) {
+        if (realtimeRegionItems.isEmpty()) {
             throw new GlobalException(ErrorCode.AIR_QUALITY_NOT_AVAILABLE);
         }
 
-        return items.stream()
+        return realtimeRegionItems.stream()
                 .map(item -> new RealtimeRegionResponse(
                         item.stationName(),
                         item.dataTime(),
