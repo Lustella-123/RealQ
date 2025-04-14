@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ServiceBefore {
+public class SlackService {
 
     @Value("${SLACK_TOKEN}")
     private String botToken;
@@ -47,9 +47,5 @@ public class ServiceBefore {
         } catch (IOException | SlackApiException e) {
             log.error("❌ 슬랙 메세지 전송 실패 - ID: {}, 메시지: {}", userId, message, e);
         }
-    }
-
-    public void sendMessageToAllUsers(List<String> slackIdList, String message) {
-        slackIdList.forEach(id -> sendMessageToUser(id, message));
     }
 }
