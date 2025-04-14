@@ -48,8 +48,4 @@ public class ServiceBefore {
             log.error("❌ 슬랙 메세지 전송 실패 - ID: {}, 메시지: {}", userId, message, e);
         }
     }
-
-    public void sendMessageToAllUsers(List<String> slackIdList, String message) {
-        slackIdList.forEach(id -> sendMessageToUser(id, message));
-    }
 }

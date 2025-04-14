@@ -23,8 +23,8 @@ public class DistrictSaveClient {
     private final DistrictRepository districtSaveRepository;
     private final RegionRepository regionSaveRepository;
 
-    @Scheduled(cron = "0 */1 * * * *")
-    public void saveAverageDistrict() {
+    public List<AverageDistrict> saveAverageDistrict() {
+        log.info("메서드 실행: saveAverageDistrict");
 
         districtSaveRepository.deleteAll();
 
@@ -34,8 +34,6 @@ public class DistrictSaveClient {
         regionNameList.forEach(region -> {
             AverageDistrictItem[] data = apiClient.getData(region, SearchConditionEnum.HOUR);
             AverageDistrictItem averageDistrictItem = data[0];
-
-            log.info("name: {}", averageDistrictItem.stationName());
 
             AverageDistrict averageDistrict = AverageDistrict.toEntity(
                     region,
@@ -48,5 +46,7 @@ public class DistrictSaveClient {
         });
 
         districtSaveRepository.saveAll(averageDistrictList);
+
+        return averageDistrictList;
     }
 }
