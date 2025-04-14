@@ -1,8 +1,8 @@
-package com.example.realq.domain.notification.region.client;
+package com.example.realq.domain.client.region;
 
+import com.example.realq.domain.average.region.entity.AverageRegion;
 import com.example.realq.domain.notification.region.entity.NotificationRegion;
 import com.example.realq.domain.notification.region.repository.NotificationRegionRepository;
-import com.example.realq.domain.average.region.entity.AverageRegion;
 import com.example.realq.domain.slack.SlackService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,26 +28,29 @@ public class RegionSendClient {
     public void sendAverageRegion() {
         log.info("메서드 실행: sendAverageRegion");
 
-        List<AverageRegion> averageRegions = regionGetClient.getAverageRegion();
-        List<NotificationRegion> notificationRegions = notificationRegionRepository.findAll();
+        List<AverageRegion> averageRegionList = regionGetClient.getAverageRegion();
+        List<NotificationRegion> notificationRegionList = notificationRegionRepository.findAll();
 
-        Map<String, String> userSlackIdToMessage = fetchAlertTargets(notificationRegions, averageRegions);
+        Map<String, String> userSlackIdToMessage = fetchAlertTargets(notificationRegionList, averageRegionList);
 
         userSlackIdToMessage.forEach(slackService::sendMessageToUser);
     }
 
-    private Map<String, String> fetchAlertTargets(List<NotificationRegion> notifications, List<AverageRegion> data) {
+    private Map<String, String> fetchAlertTargets(
+            List<NotificationRegion> notificationRegionList,
+            List<AverageRegion> averageRegionList
+    ) {
         Map<String, String> alertMap = new HashMap<>();
 
-        for (NotificationRegion notification : notifications) {
+        for (NotificationRegion notification : notificationRegionList) {
             if (!notification.isEnabled()) continue;
 
-            data.stream()
-                    .filter(avg -> avg.getRegionName().equals(notification.getRegion().getName()))
+            averageRegionList.stream()
+                    .filter(averageRegion -> averageRegion.getRegionName().equals(notification.getRegion().getName()))
                     .findFirst()
-                    .ifPresent(avg -> {
-                        int pm10 = Integer.parseInt(avg.getPm10Value());
-                        int pm25 = Integer.parseInt(avg.getPm25Value());
+                    .ifPresent(averageRegion -> {
+                        int pm10 = Integer.parseInt(averageRegion.getPm10Value());
+                        int pm25 = Integer.parseInt(averageRegion.getPm25Value());
 
                         if (pm10 > notification.getPm10Threshold() || pm25 > notification.getPm25Threshold()) {
                             String message = buildAlertMessage(notification.getRegion().getName(), pm10, pm25, notification);
