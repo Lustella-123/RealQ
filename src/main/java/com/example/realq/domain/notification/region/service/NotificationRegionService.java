@@ -88,7 +88,7 @@ public class NotificationRegionService {
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
         NotificationRegion notificationRegion = notificationRegionRepository.findById(id)
-                .orElseThrow(() -> new GlobalException(ErrorCode.NOTIFICATION_PM10_NOT_FOUND));
+                .orElseThrow(() -> new GlobalException(ErrorCode.NOTIFICATION_REGION_NOT_FOUND));
 
         Integer newPm10Threshold = requestDto.newPm10Threshold();
 

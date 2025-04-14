@@ -1,7 +1,6 @@
-package com.example.realq.domain.notification.region.client;
+package com.example.realq.domain.client.region;
 
 import com.example.realq.domain.average.region.SearchConditionEnum;
-import com.example.realq.domain.average.region.client.AverageRegionApiClient;
 import com.example.realq.domain.average.region.dto.response.AverageRegionItem;
 import com.example.realq.domain.realtime.region.repository.RegionRepository;
 import com.example.realq.domain.average.region.entity.AverageRegion;
@@ -17,7 +16,7 @@ import java.util.List;
 @Slf4j
 public class RegionGetClient {
 
-    private final AverageRegionApiClient apiClient;
+    private final AverageRegionApiClient averageRegionApiClient;
     private final RegionRepository regionSaveRepository;
 
     public List<AverageRegion> getAverageRegion() {
@@ -27,7 +26,7 @@ public class RegionGetClient {
         List<AverageRegion> averageRegionList = new ArrayList<>();
 
         regionNameList.forEach(region -> {
-            AverageRegionItem[] data = apiClient.getData(region, SearchConditionEnum.HOUR);
+            AverageRegionItem[] data = averageRegionApiClient.getData(region, SearchConditionEnum.HOUR);
             AverageRegionItem averageRegionItem = data[0];
 
             AverageRegion averageRegion = AverageRegion.toEntity(

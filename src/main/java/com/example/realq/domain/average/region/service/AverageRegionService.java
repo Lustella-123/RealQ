@@ -1,7 +1,7 @@
 package com.example.realq.domain.average.region.service;
 
 import com.example.realq.domain.average.region.SearchConditionEnum;
-import com.example.realq.domain.average.region.client.AverageRegionApiClient;
+import com.example.realq.domain.client.region.AverageRegionApiClient;
 import com.example.realq.domain.average.region.dto.response.AverageRegionItem;
 import com.example.realq.domain.average.region.dto.response.AverageRegionResponse;
 import com.example.realq.global.error.ErrorCode;
@@ -19,7 +19,7 @@ public class AverageRegionService {
         AverageRegionItem[] items = apiClient.getData(region, period);
 
         if (items.length == 0) {
-            throw new GlobalException(ErrorCode.DISTRICT_API_ERROR);
+            throw new GlobalException(ErrorCode.REALTIME_AVERAGE_API_ERROR);
         }
 
         AverageRegionItem item = items[0];

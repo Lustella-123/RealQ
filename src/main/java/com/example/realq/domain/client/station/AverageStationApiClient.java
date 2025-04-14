@@ -1,4 +1,4 @@
-package com.example.realq.domain.average.station;
+package com.example.realq.domain.client.station;
 
 import com.example.realq.domain.realtime.region.client.RealtimeRegionApiClient;
 import com.example.realq.domain.realtime.region.dto.response.RealtimeRegionItem;
@@ -18,16 +18,9 @@ public class AverageStationApiClient {
     private final RealtimeRegionApiClient realtimeRegionApiClient;
     private final RegionRepository regionRepository;
 
-    public List<AverageStation> getStationData() {
-        log.info("메서드 실행: getStationData");
-
-        List<RealtimeRegionItem> realTimeRegionItemList = getAllRegionItems();
-
-        return extractAverageStations(realTimeRegionItemList);
-    }
-
-    private List<RealtimeRegionItem> getAllRegionItems() {
+    public List<RealtimeRegionItem> getData() {
         List<String> regionNameList = regionRepository.findAllRegionNames();
+
         List<RealtimeRegionItem> realtimeRegionItemList = new ArrayList<>();
 
         for (String region : regionNameList) {
@@ -36,19 +29,5 @@ public class AverageStationApiClient {
         }
 
         return realtimeRegionItemList;
-    }
-
-    private List<AverageStation> extractAverageStations(List<RealtimeRegionItem> realtimeRegionItemList) {
-        List<AverageStation> averageStationList = new ArrayList<>();
-
-        for (RealtimeRegionItem realtimeRegionItem : realtimeRegionItemList) {
-            averageStationList.add(AverageStation.toEntity(
-                    realtimeRegionItem.stationName(),
-                    realtimeRegionItem.pm10Value(),
-                    realtimeRegionItem.pm25Value()
-            ));
-        }
-
-        return averageStationList;
     }
 }
