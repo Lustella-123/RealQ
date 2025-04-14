@@ -1,9 +1,9 @@
-package com.example.realq.domain.notification.district;
+package com.example.realq.domain.notification.region;
 
 import com.example.realq.domain.notificationregion.entity.NotificationRegion;
 import com.example.realq.domain.notificationregion.repository.NotificationRegionRepository;
 import com.example.realq.domain.average.region.entity.AverageRegion;
-import com.example.realq.domain.slack.service.SlackService;
+import com.example.realq.domain.slack.SlackService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,14 +21,14 @@ import java.util.Map;
 public class RegionSendClient {
 
     private final SlackService slackService;
-    private final RegionGetClient districtSaveClient;
+    private final RegionGetClient regionGetClient;
     private final NotificationRegionRepository notificationRegionRepository;
 
     @Scheduled(cron = "0 0 5,12,17 * * *")
     public void sendAverageRegion() {
         log.info("메서드 실행: sendAverageRegion");
 
-        List<AverageRegion> averageRegions = districtSaveClient.getAverageRegion();
+        List<AverageRegion> averageRegions = regionGetClient.getAverageRegion();
         List<NotificationRegion> notificationRegions = notificationRegionRepository.findAll();
 
         Map<String, String> userSlackIdToMessage = fetchAlertTargets(notificationRegions, averageRegions);

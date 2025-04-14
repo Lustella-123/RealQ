@@ -1,4 +1,4 @@
-package com.example.realq.domain.notification.district;
+package com.example.realq.domain.notification.region;
 
 import com.example.realq.domain.average.region.SearchConditionEnum;
 import com.example.realq.domain.average.region.client.AverageRegionApiClient;
@@ -28,15 +28,15 @@ public class RegionGetClient {
 
         regionNameList.forEach(region -> {
             AverageRegionItem[] data = apiClient.getData(region, SearchConditionEnum.HOUR);
-            AverageRegionItem averageDistrictItem = data[0];
+            AverageRegionItem averageRegionItem = data[0];
 
-            AverageRegion averageDistrict = AverageRegion.toEntity(
+            AverageRegion averageRegion = AverageRegion.toEntity(
                     region,
-                    averageDistrictItem.pm10Value(),
-                    averageDistrictItem.pm25Value()
+                    averageRegionItem.pm10Value(),
+                    averageRegionItem.pm25Value()
             );
 
-            averageRegionList.add(averageDistrict);
+            averageRegionList.add(averageRegion);
 
         });
 
