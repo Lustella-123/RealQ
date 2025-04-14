@@ -1,4 +1,4 @@
-package com.example.realq.domain.notificationregion.dto.request;
+package com.example.realq.domain.notification.region.dto.request;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

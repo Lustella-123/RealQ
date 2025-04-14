@@ -1,7 +1,7 @@
-package com.example.realq.domain.notification.region;
+package com.example.realq.domain.notification.region.client;
 
-import com.example.realq.domain.notificationregion.entity.NotificationRegion;
-import com.example.realq.domain.notificationregion.repository.NotificationRegionRepository;
+import com.example.realq.domain.notification.region.entity.NotificationRegion;
+import com.example.realq.domain.notification.region.repository.NotificationRegionRepository;
 import com.example.realq.domain.average.region.entity.AverageRegion;
 import com.example.realq.domain.slack.SlackService;
 import jakarta.transaction.Transactional;

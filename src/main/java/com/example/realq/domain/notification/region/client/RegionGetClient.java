@@ -1,4 +1,4 @@
-package com.example.realq.domain.notification.region;
+package com.example.realq.domain.notification.region.client;
 
 import com.example.realq.domain.average.region.SearchConditionEnum;
 import com.example.realq.domain.average.region.client.AverageRegionApiClient;
