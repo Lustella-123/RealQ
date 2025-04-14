@@ -21,26 +21,34 @@ public class AverageStationApiClient {
     public List<AverageStation> getStationData() {
         log.info("메서드 실행: getStationData");
 
+        List<RealtimeRegionItem> realTimeRegionItemList = getAllRegionItems();
+
+        return extractAverageStations(realTimeRegionItemList);
+    }
+
+    private List<RealtimeRegionItem> getAllRegionItems() {
         List<String> regionNameList = regionRepository.findAllRegionNames();
+        List<RealtimeRegionItem> realtimeRegionItemList = new ArrayList<>();
+
+        for (String region : regionNameList) {
+            List<RealtimeRegionItem> itemList = realtimeRegionApiClient.getRegionData(region);
+            realtimeRegionItemList.addAll(itemList);
+        }
+
+        return realtimeRegionItemList;
+    }
+
+    private List<AverageStation> extractAverageStations(List<RealtimeRegionItem> realtimeRegionItemList) {
         List<AverageStation> averageStationList = new ArrayList<>();
 
-        regionNameList.forEach(region -> {
-                    List<RealtimeRegionItem> realtimeRegionItemList = realtimeRegionApiClient.getRegionData(region);
+        for (RealtimeRegionItem realtimeRegionItem : realtimeRegionItemList) {
+            averageStationList.add(AverageStation.toEntity(
+                    realtimeRegionItem.stationName(),
+                    realtimeRegionItem.pm10Value(),
+                    realtimeRegionItem.pm25Value()
+            ));
+        }
 
-                    realtimeRegionItemList.forEach(
-                            realtimeRegionItem -> {
-                                AverageStation averageStation = AverageStation.toEntity(
-                                        realtimeRegionItem.stationName(),
-                                        realtimeRegionItem.pm10Value(),
-                                        realtimeRegionItem.pm25Value()
-                                );
-
-                                averageStationList.add(averageStation);
-
-                            });
-                }
-        );
         return averageStationList;
-
     }
 }
