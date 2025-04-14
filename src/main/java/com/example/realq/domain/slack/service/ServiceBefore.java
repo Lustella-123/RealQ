@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class SlackService {
+public class ServiceBefore {
 
     @Value("${SLACK_TOKEN}")
     private String botToken;
