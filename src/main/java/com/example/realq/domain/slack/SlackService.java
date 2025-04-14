@@ -1,4 +1,4 @@
-package com.example.realq.domain.slack.service;
+package com.example.realq.domain.slack;
 
 import com.slack.api.Slack;
 import com.slack.api.methods.SlackApiException;
