@@ -27,7 +27,10 @@ public class NotificationRegionController {
             @Valid @RequestBody NotificationRegionCreateRequest requestDto,
             HttpSession session
     ) {
-        NotificationRegionCreateResponse responseDto = notificationRegionService.registerNotificationRegion(requestDto, session);
+        NotificationRegionCreateResponse responseDto = notificationRegionService.registerNotificationRegion(
+                requestDto,
+                session
+        );
 
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
@@ -45,7 +48,10 @@ public class NotificationRegionController {
             @Valid @RequestBody NotificationRegionPatchRequest requestDto,
             HttpSession session
     ) {
-        NotificationRegionPatchResponse responseDto = notificationRegionService.updateNotificationRegion(requestDto, session);
+        NotificationRegionPatchResponse responseDto = notificationRegionService.updateNotificationRegion(
+                requestDto,
+                session
+        );
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }

@@ -1,17 +1,19 @@
-package com.example.realq.domain.notificationpm25.entity;
+package com.example.realq.domain.notification.station.entity;
 
 import com.example.realq.domain.realtime.station.entity.Station;
 import com.example.realq.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "notification_pm_2.5")
-public class NotificationPm25 {
+@Table(name = "notification_station")
+@NoArgsConstructor
+public class NotificationStation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +28,9 @@ public class NotificationPm25 {
     private Station station;
 
     @Column(nullable = false)
+    private Integer pm10Threshold;
+
+    @Column(nullable = false)
     private Integer pm25Threshold;
 
     @Column(nullable = false)
@@ -38,18 +43,25 @@ public class NotificationPm25 {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    public static NotificationPm25 toEntity(
+    public static NotificationStation toEntity(
             User user,
             Station station,
+            Integer pm10Threshold,
             Integer pm25Threshold
     ) {
-        NotificationPm25 notificationPm25 = new NotificationPm25();
-        notificationPm25.user = user;
-        notificationPm25.station = station;
-        notificationPm25.pm25Threshold = pm25Threshold;
-        notificationPm25.createdAt = LocalDateTime.now();
-        notificationPm25.updatedAt = LocalDateTime.now();
-        return notificationPm25;
+        NotificationStation notificationStation = new NotificationStation();
+        notificationStation.user = user;
+        notificationStation.station = station;
+        notificationStation.pm10Threshold = pm10Threshold;
+        notificationStation.pm25Threshold = pm25Threshold;
+        notificationStation.createdAt = LocalDateTime.now();
+        notificationStation.updatedAt = LocalDateTime.now();
+        return notificationStation;
+    }
+
+    public void updatePm10Threshold(Integer newPm10Threshold) {
+        this.pm10Threshold = newPm10Threshold;
+        this.updatedAt = LocalDateTime.now();
     }
 
     public void updatePm25Threshold(Integer newPm25Threshold) {

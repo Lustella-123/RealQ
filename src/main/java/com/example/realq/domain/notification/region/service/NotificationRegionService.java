@@ -54,7 +54,12 @@ public class NotificationRegionService {
             return NotificationRegionCreateResponse.toDto(existingNotification.get());
         }
 
-        NotificationRegion notificationRegion = NotificationRegion.toEntity(user, region, pm10Threshold, pm25Threshold);
+        NotificationRegion notificationRegion = NotificationRegion.toEntity(
+                user,
+                region,
+                pm10Threshold,
+                pm25Threshold
+        );
 
         notificationRegionRepository.save(notificationRegion);
 
