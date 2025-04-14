@@ -1,10 +1,10 @@
 package com.example.realq.domain.notification.district;
 
-import com.example.realq.domain.average.district.SearchConditionEnum;
-import com.example.realq.domain.average.district.client.AverageDistrictApiClient;
-import com.example.realq.domain.average.district.dto.response.AverageDistrictItem;
+import com.example.realq.domain.average.region.SearchConditionEnum;
+import com.example.realq.domain.average.region.client.AverageRegionApiClient;
+import com.example.realq.domain.average.region.dto.response.AverageRegionItem;
 import com.example.realq.domain.realtime.region.repository.RegionRepository;
-import com.example.realq.domain.slack.entity.AverageRegion;
+import com.example.realq.domain.average.region.entity.AverageRegion;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 public class RegionGetClient {
 
-    private final AverageDistrictApiClient apiClient;
+    private final AverageRegionApiClient apiClient;
     private final RegionRepository regionSaveRepository;
 
     public List<AverageRegion> getAverageRegion() {
@@ -27,8 +27,8 @@ public class RegionGetClient {
         List<AverageRegion> averageRegionList = new ArrayList<>();
 
         regionNameList.forEach(region -> {
-            AverageDistrictItem[] data = apiClient.getData(region, SearchConditionEnum.HOUR);
-            AverageDistrictItem averageDistrictItem = data[0];
+            AverageRegionItem[] data = apiClient.getData(region, SearchConditionEnum.HOUR);
+            AverageRegionItem averageDistrictItem = data[0];
 
             AverageRegion averageDistrict = AverageRegion.toEntity(
                     region,

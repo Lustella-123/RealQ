@@ -1,8 +1,8 @@
-package com.example.realq.domain.average.district.client;
+package com.example.realq.domain.average.region.client;
 
-import com.example.realq.domain.average.district.SearchConditionEnum;
-import com.example.realq.domain.average.district.dto.response.AverageDistrictItem;
-import com.example.realq.domain.average.district.dto.response.AverageDistrictWrapper;
+import com.example.realq.domain.average.region.SearchConditionEnum;
+import com.example.realq.domain.average.region.dto.response.AverageRegionItem;
+import com.example.realq.domain.average.region.dto.response.AverageRegionWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,14 +14,14 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor
-public class AverageDistrictApiClient {
+public class AverageRegionApiClient {
 
     private final RestTemplate restTemplate;
 
     @Value("${airkorea.api.service-key}")
     private String serviceKey;
 
-    public AverageDistrictItem[] getData(String region, SearchConditionEnum period) {
+    public AverageRegionItem[] getData(String region, SearchConditionEnum period) {
         try {
             String encodedRegion = URLEncoder.encode(region, StandardCharsets.UTF_8);
             String encodedPeriod = URLEncoder.encode(period.name(), StandardCharsets.UTF_8);
@@ -31,13 +31,13 @@ public class AverageDistrictApiClient {
                     encodedRegion, encodedPeriod, serviceKey
             );
             URI uri = new URI(url);
-            return restTemplate.getForEntity(uri, AverageDistrictWrapper.class)
+            return restTemplate.getForEntity(uri, AverageRegionWrapper.class)
                     .getBody()
                     .response()
                     .body()
                     .items();
         } catch (Exception e) {
-            return new AverageDistrictItem[0];
+            return new AverageRegionItem[0];
         }
     }
 }

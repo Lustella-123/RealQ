@@ -1,6 +1,6 @@
-package com.example.realq.domain.average.district.dto.response;
+package com.example.realq.domain.average.region.dto.response;
 
-public record AverageDistrictItem(
+public record AverageRegionItem(
         String stationName,
         String dataTime,
         String pm10Value,
