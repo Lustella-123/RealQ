@@ -1,6 +1,6 @@
-package com.example.realq.domain.notificationregion.dto.response;
+package com.example.realq.domain.notification.region.dto.response;
 
-import com.example.realq.domain.notificationregion.entity.NotificationRegion;
+import com.example.realq.domain.notification.region.entity.NotificationRegion;
 
 public record NotificationRegionCreateResponse(
         Long id,

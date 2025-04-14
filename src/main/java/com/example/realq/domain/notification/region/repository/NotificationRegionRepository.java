@@ -1,6 +1,6 @@
-package com.example.realq.domain.notificationregion.repository;
+package com.example.realq.domain.notification.region.repository;
 
-import com.example.realq.domain.notificationregion.entity.NotificationRegion;
+import com.example.realq.domain.notification.region.entity.NotificationRegion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,11 +1,11 @@
-package com.example.realq.domain.notificationregion.controller;
+package com.example.realq.domain.notification.region.controller;
 
-import com.example.realq.domain.notificationregion.dto.request.NotificationRegionCreateRequest;
-import com.example.realq.domain.notificationregion.dto.request.NotificationRegionPatchRequest;
-import com.example.realq.domain.notificationregion.dto.response.NotificationRegionCreateResponse;
-import com.example.realq.domain.notificationregion.dto.response.NotificationRegionPatchResponse;
-import com.example.realq.domain.notificationregion.dto.response.NotificationRegionReadResponse;
-import com.example.realq.domain.notificationregion.service.NotificationRegionService;
+import com.example.realq.domain.notification.region.dto.request.NotificationRegionCreateRequest;
+import com.example.realq.domain.notification.region.dto.request.NotificationRegionPatchRequest;
+import com.example.realq.domain.notification.region.dto.response.NotificationRegionCreateResponse;
+import com.example.realq.domain.notification.region.dto.response.NotificationRegionPatchResponse;
+import com.example.realq.domain.notification.region.dto.response.NotificationRegionReadResponse;
+import com.example.realq.domain.notification.region.service.NotificationRegionService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

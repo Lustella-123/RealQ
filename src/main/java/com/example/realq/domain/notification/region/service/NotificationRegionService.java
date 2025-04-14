@@ -1,12 +1,12 @@
-package com.example.realq.domain.notificationregion.service;
+package com.example.realq.domain.notification.region.service;
 
-import com.example.realq.domain.notificationregion.dto.request.NotificationRegionCreateRequest;
-import com.example.realq.domain.notificationregion.dto.request.NotificationRegionPatchRequest;
-import com.example.realq.domain.notificationregion.dto.response.NotificationRegionCreateResponse;
-import com.example.realq.domain.notificationregion.dto.response.NotificationRegionPatchResponse;
-import com.example.realq.domain.notificationregion.dto.response.NotificationRegionReadResponse;
-import com.example.realq.domain.notificationregion.entity.NotificationRegion;
-import com.example.realq.domain.notificationregion.repository.NotificationRegionRepository;
+import com.example.realq.domain.notification.region.dto.request.NotificationRegionCreateRequest;
+import com.example.realq.domain.notification.region.dto.request.NotificationRegionPatchRequest;
+import com.example.realq.domain.notification.region.dto.response.NotificationRegionCreateResponse;
+import com.example.realq.domain.notification.region.dto.response.NotificationRegionPatchResponse;
+import com.example.realq.domain.notification.region.dto.response.NotificationRegionReadResponse;
+import com.example.realq.domain.notification.region.entity.NotificationRegion;
+import com.example.realq.domain.notification.region.repository.NotificationRegionRepository;
 import com.example.realq.domain.realtime.region.entity.Region;
 import com.example.realq.domain.realtime.region.repository.RegionRepository;
 import com.example.realq.domain.user.entity.User;

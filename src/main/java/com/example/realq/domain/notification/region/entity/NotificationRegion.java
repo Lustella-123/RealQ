@@ -1,4 +1,4 @@
-package com.example.realq.domain.notificationregion.entity;
+package com.example.realq.domain.notification.region.entity;
 
 import com.example.realq.domain.realtime.region.entity.Region;
 import com.example.realq.domain.user.entity.User;
