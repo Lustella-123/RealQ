@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "average_district")
+@Table(name = "average_region")
 @NoArgsConstructor
-public class AverageDistrict {
+public class AverageRegion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,16 +30,16 @@ public class AverageDistrict {
     @Column(nullable = false)
     LocalDateTime createdAt;
 
-    public static AverageDistrict toEntity(
+    public static AverageRegion toEntity(
             String regionName,
             String pm10Value,
             String pm25Value
     ) {
-        AverageDistrict averageDistrict = new AverageDistrict();
-        averageDistrict.regionName = regionName;
-        averageDistrict.pm10Value = pm10Value;
-        averageDistrict.pm25Value = pm25Value;
-        averageDistrict.createdAt = LocalDateTime.now();
-        return averageDistrict;
+        AverageRegion averageRegion = new AverageRegion();
+        averageRegion.regionName = regionName;
+        averageRegion.pm10Value = pm10Value;
+        averageRegion.pm25Value = pm25Value;
+        averageRegion.createdAt = LocalDateTime.now();
+        return averageRegion;
     }
 }
