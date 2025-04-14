@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/districts")
+@RequestMapping("/api/regions")
 @RequiredArgsConstructor
 public class AverageRegionController {
 
-    private final AverageRegionService avgDistrictService;
+    private final AverageRegionService averageRegionService;
 
     @GetMapping
     public ResponseEntity<AverageRegionResponse> getByRegion(@RequestParam("region") String region, @RequestParam("period")SearchConditionEnum period) {
-        return new ResponseEntity<>(avgDistrictService.getByRegionAndPeriod(region, period), HttpStatus.OK);
+        return new ResponseEntity<>(averageRegionService.getByRegionAndPeriod(region, period), HttpStatus.OK);
     }
 }
