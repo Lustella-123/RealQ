@@ -33,15 +33,15 @@ public class BookmarkStationService {
             HttpSession session
     ) {
         String email = (String) session.getAttribute("email");
-        Long stationIdToRegister = requestDto.id();
+        Long stationIdToRegister = requestDto.stationId();
 
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findBySlackId(email)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
         Station station = stationRepository.findById(stationIdToRegister)
                 .orElseThrow(() -> new GlobalException(ErrorCode.STATION_NOT_FOUND));
 
-        Optional<BookmarkStation> existingBookmarkStation = bookmarkStationRepository.findByUserEmailAndStationId(
+        Optional<BookmarkStation> existingBookmarkStation = bookmarkStationRepository.findByUserSlackIdAndStationId(
                 email,
                 stationIdToRegister
         );
@@ -62,7 +62,7 @@ public class BookmarkStationService {
 
         String email = (String) session.getAttribute("email");
 
-        List<BookmarkStation> bookmarkStationList = bookmarkStationRepository.findByUserEmail(email);
+        List<BookmarkStation> bookmarkStationList = bookmarkStationRepository.findByUserSlackId(email);
 
         return bookmarkStationList.stream().map(BookmarkStationReadResponse::toDto).toList();
     }
