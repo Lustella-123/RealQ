@@ -58,8 +58,8 @@ public class StationSendClient {
                     .filter(averageStation -> averageStation.getStationName().equals(stationName))
                     .findFirst()
                     .ifPresent(averageStation -> {
-                        int pm10 = Integer.parseInt(averageStation.getPm10Value());
-                        int pm25 = Integer.parseInt(averageStation.getPm25Value());
+                        int pm10 = parseOrDefault(averageStation.getPm10Value(), 301);
+                        int pm25 = parseOrDefault(averageStation.getPm25Value(), 151);
 
                         if (pm10 > notification.getPm10Threshold() || pm25 > notification.getPm25Threshold()) {
                             String message = buildAlertMessage(stationName, pm10, pm25, notification);
@@ -69,6 +69,14 @@ public class StationSendClient {
         }
 
         return alertMap;
+    }
+
+    private int parseOrDefault(String value, int defaultValue) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException | NullPointerException e) {
+            return defaultValue;
+        }
     }
 
     private String buildAlertMessage(String stationName, int pm10, int pm25, NotificationStation notificationStation) {

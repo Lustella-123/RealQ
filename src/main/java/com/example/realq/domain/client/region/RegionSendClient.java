@@ -48,8 +48,8 @@ public class RegionSendClient {
                     .filter(averageRegion -> averageRegion.getRegionName().equals(notification.getRegion().getName()))
                     .findFirst()
                     .ifPresent(averageRegion -> {
-                        int pm10 = Integer.parseInt(averageRegion.getPm10Value());
-                        int pm25 = Integer.parseInt(averageRegion.getPm25Value());
+                        int pm10 = parseOrDefault(averageRegion.getPm10Value(), 301);
+                        int pm25 = parseOrDefault(averageRegion.getPm25Value(), 151);
 
                         if (pm10 > notification.getPm10Threshold() || pm25 > notification.getPm25Threshold()) {
                             String message = buildAlertMessage(notification.getRegion().getName(), pm10, pm25, notification);
@@ -59,6 +59,14 @@ public class RegionSendClient {
         }
 
         return alertMap;
+    }
+
+    private int parseOrDefault(String value, int defaultValue) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException | NullPointerException e) {
+            return defaultValue;
+        }
     }
 
     private String buildAlertMessage(String regionName, int pm10, int pm25, NotificationRegion n) {
