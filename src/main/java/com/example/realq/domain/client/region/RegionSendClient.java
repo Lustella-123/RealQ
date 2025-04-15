@@ -28,19 +28,12 @@ public class RegionSendClient {
     public void sendAverageRegion() {
         log.info("메서드 실행: sendAverageRegion");
 
-        long totalStart = System.nanoTime(); // 전체 시간 측정 시작
-
         List<AverageRegion> averageRegionList = regionGetClient.getAverageRegion();
         List<NotificationRegion> notificationRegionList = notificationRegionRepository.findAllByEnabledTrue();
 
         Map<String, String> userSlackIdToMessage = fetchAlertTargets(notificationRegionList, averageRegionList);
 
         userSlackIdToMessage.forEach(slackService::sendMessageToUser);
-
-        long totalEnd = System.nanoTime(); // 전체 시간 측정 끝
-        long durationS = (totalEnd - totalStart) / 1_000_000_000;
-        long durationMs = (totalEnd - totalStart) / 1_000_000;
-        log.info("🔥 [전체 Slack 전송 소요 시간]: {} s {} ms", durationS, durationMs);
     }
 
     private Map<String, String> fetchAlertTargets(
@@ -55,8 +48,8 @@ public class RegionSendClient {
                     .filter(averageRegion -> averageRegion.getRegionName().equals(notification.getRegion().getName()))
                     .findFirst()
                     .ifPresent(averageRegion -> {
-                        int pm10 = Integer.parseInt(averageRegion.getPm10Value());
-                        int pm25 = Integer.parseInt(averageRegion.getPm25Value());
+                        int pm10 = parseOrDefault(averageRegion.getPm10Value(), 301);
+                        int pm25 = parseOrDefault(averageRegion.getPm25Value(), 151);
 
                         if (pm10 > notification.getPm10Threshold() || pm25 > notification.getPm25Threshold()) {
                             String message = buildAlertMessage(notification.getRegion().getName(), pm10, pm25, notification);
@@ -66,6 +59,14 @@ public class RegionSendClient {
         }
 
         return alertMap;
+    }
+
+    private int parseOrDefault(String value, int defaultValue) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException | NullPointerException e) {
+            return defaultValue;
+        }
     }
 
     private String buildAlertMessage(String regionName, int pm10, int pm25, NotificationRegion n) {

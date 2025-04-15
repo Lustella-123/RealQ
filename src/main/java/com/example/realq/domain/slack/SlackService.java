@@ -8,6 +8,7 @@ import com.slack.api.methods.response.conversations.ConversationsOpenResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class SlackService {
 
     private final Slack slack;
 
+    @Async
     public void sendMessageToUser(String slackId, String message) {
         long start = System.nanoTime(); // 사용자별 시간 측정 시작
 
@@ -45,7 +47,7 @@ public class SlackService {
                 long end = System.nanoTime();
                 long durationS = (end - start) / 1_000_000_000;
                 long durationMs = (end - start) / 1_000_000;
-                log.info("✅ [전송 완료] {} ({} ms)", slackId, durationS, durationMs);
+                log.info("✅ [전송 완료] {}: ({} s {} ms)", slackId, durationS, durationMs);
             } else {
                 log.error("❌ DM 채널 열기 실패: {}", openResponse.getError());
             }
