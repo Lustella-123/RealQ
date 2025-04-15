@@ -24,9 +24,11 @@ public class StationSendClient {
     private final StationGetClient stationGetClient;
     private final NotificationStationRepository notificationStationRepository;
 
-    @Scheduled(cron = "0 0 7,12,17 * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void sendAverageStation() {
         log.info("메서드 실행: sendAverageStation");
+
+        long totalStart = System.nanoTime(); // 전체 시간 측정 시작
 
         List<AverageStation> averageStationList = stationGetClient.getAverageStation();
 
@@ -36,6 +38,10 @@ public class StationSendClient {
 
         userSlackIdToMessage.forEach(slackService::sendMessageToUser);
 
+        long totalEnd = System.nanoTime(); // 전체 시간 측정 끝
+        long durationS = (totalEnd - totalStart) / 1_000_000_000;
+        long durationMs = (totalEnd - totalStart) / 1_000_000;
+        log.info("🔥 [전체 Slack 전송 소요 시간]: {} s {} ms", durationS, durationMs);
     }
 
     private Map<String, String> fetchAlertTargets(

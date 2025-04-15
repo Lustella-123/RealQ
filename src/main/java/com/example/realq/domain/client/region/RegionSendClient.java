@@ -28,19 +28,12 @@ public class RegionSendClient {
     public void sendAverageRegion() {
         log.info("메서드 실행: sendAverageRegion");
 
-        long totalStart = System.nanoTime(); // 전체 시간 측정 시작
-
         List<AverageRegion> averageRegionList = regionGetClient.getAverageRegion();
         List<NotificationRegion> notificationRegionList = notificationRegionRepository.findAllByEnabledTrue();
 
         Map<String, String> userSlackIdToMessage = fetchAlertTargets(notificationRegionList, averageRegionList);
 
         userSlackIdToMessage.forEach(slackService::sendMessageToUser);
-
-        long totalEnd = System.nanoTime(); // 전체 시간 측정 끝
-        long durationS = (totalEnd - totalStart) / 1_000_000_000;
-        long durationMs = (totalEnd - totalStart) / 1_000_000;
-        log.info("🔥 [전체 Slack 전송 소요 시간]: {} s {} ms", durationS, durationMs);
     }
 
     private Map<String, String> fetchAlertTargets(
