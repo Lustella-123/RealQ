@@ -12,7 +12,6 @@ public enum ErrorCode {
 
     // 유저 관련
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 사용자입니다."),
-    DUPLICATE_EMAIL(HttpStatus.CONFLICT, "이미 사용 중인 이메일입니다."),
     INVALID_PASSWORD(HttpStatus.FORBIDDEN, "잘못된 비밀번호입니다."),
 
     // 인증 관련

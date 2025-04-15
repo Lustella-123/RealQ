@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface BookmarkStationRepository extends JpaRepository<BookmarkStation, Long> {
 
-    Optional<BookmarkStation> findByUserEmailAndStationId(String email, Long stationId);
+    Optional<BookmarkStation> findByUserSlackIdAndStationId(String slackId, Long stationId);
 
-    List<BookmarkStation> findByUserEmail(String email);
+    List<BookmarkStation> findByUserSlackId(String slackId);
 }

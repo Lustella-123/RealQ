@@ -32,17 +32,17 @@ public class BookmarkRegionService {
             BookmarkRegionCreateRequest requestDto,
             HttpSession session
     ) {
-        String email = (String) session.getAttribute("email");
-        Long regionIdToRegister = requestDto.id();
+        String slackId = (String) session.getAttribute("slackId");
+        Long regionIdToRegister = requestDto.regionId();
 
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findBySlackId(slackId)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
         Region region = regionRepository.findById(regionIdToRegister)
                 .orElseThrow(() -> new GlobalException(ErrorCode.REGION_NOT_FOUND));
 
-        Optional<BookmarkRegion> existingBookmarkRegion = bookmarkRegionRepository.findByUserEmailAndRegionId(
-                email,
+        Optional<BookmarkRegion> existingBookmarkRegion = bookmarkRegionRepository.findByUserSlackIdAndRegionId(
+                slackId,
                 regionIdToRegister
         );
 
@@ -60,9 +60,9 @@ public class BookmarkRegionService {
     @Transactional(readOnly = true)
     public List<BookmarkRegionReadResponse> readAllBookmarkRegions(HttpSession session) {
 
-        String email = (String) session.getAttribute("email");
+        String slackId = (String) session.getAttribute("slackId");
 
-        List<BookmarkRegion> bookmarkRegionList = bookmarkRegionRepository.findByUserEmail(email);
+        List<BookmarkRegion> bookmarkRegionList = bookmarkRegionRepository.findByUserSlackId(slackId);
 
         return bookmarkRegionList.stream().map(BookmarkRegionReadResponse::toDto).toList();
     }

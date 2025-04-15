@@ -18,25 +18,25 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserSignUpResponse registerUser(UserSignUpRequest userRequest) {
-        if (userRepository.existsByEmail(userRequest.email())) {
+    public UserSignUpResponse registerUser(UserSignUpRequest requestDto) {
+        if (userRepository.existsBySlackId(requestDto.slackId())) {
             throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
         }
 
-        User user = User.toEntity(userRequest.email(), userRequest.password(), userRequest.slackId());
+        User user = User.toEntity(requestDto.slackId(), requestDto.password());
         userRepository.save(user);
         return UserSignUpResponse.toDto();
     }
 
-    public UserLoginResponse Login(UserLoginRequest userRequest, HttpSession session) {
-        User user = userRepository.findByEmail(userRequest.email())
+    public UserLoginResponse Login(UserLoginRequest requestDto, HttpSession session) {
+        User user = userRepository.findBySlackId(requestDto.slackId())
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
-        if (!user.getPassword().equals(userRequest.password())) {
+        if (!user.getPassword().equals(requestDto.password())) {
             throw new GlobalException(ErrorCode.INVALID_PASSWORD);
         }
 
-        session.setAttribute("email", user.getEmail());
+        session.setAttribute("slackId", user.getSlackId());
 
         return UserLoginResponse.toDto();
     }

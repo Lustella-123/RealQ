@@ -34,20 +34,20 @@ public class NotificationStationService {
             NotificationStationCreateRequest requestDto,
             HttpSession session
     ) {
-        String email = (String) session.getAttribute("email");
+        String slackId = (String) session.getAttribute("slackId");
         Long stationId = requestDto.stationId();
         Integer pm10Threshold = requestDto.pm10Threshold();
         Integer pm25Threshold = requestDto.pm25Threshold();
 
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findBySlackId(slackId)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
 
         Station station = stationRepository.findById(stationId)
                 .orElseThrow(() -> new GlobalException(ErrorCode.STATION_NOT_FOUND));
 
-        Optional<NotificationStation> existingNotification = notificationStationRepository.findByUserEmailAndStationId(
-                email,
+        Optional<NotificationStation> existingNotification = notificationStationRepository.findByUserSlackIdAndStationId(
+                slackId,
                 stationId
         );
 
@@ -70,9 +70,9 @@ public class NotificationStationService {
     @Transactional(readOnly = true)
     public List<NotificationStationReadResponse> readAllNotificationStations(HttpSession session) {
 
-        String email = (String) session.getAttribute("email");
+        String slackId = (String) session.getAttribute("slackId");
 
-        List<NotificationStation> notificationStationList = notificationStationRepository.findByUserEmail(email);
+        List<NotificationStation> notificationStationList = notificationStationRepository.findByUserSlackId(slackId);
 
         return notificationStationList.stream().map(NotificationStationReadResponse::toDto).toList();
     }
@@ -82,10 +82,10 @@ public class NotificationStationService {
             NotificationStationPatchRequest requestDto,
             HttpSession session
     ) {
-        String email = (String) session.getAttribute("email");
+        String slackId = (String) session.getAttribute("slackId");
         Long id = requestDto.id();
 
-        userRepository.findByEmail(email)
+        userRepository.findBySlackId(slackId)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
         NotificationStation notificationStation = notificationStationRepository.findById(id)
