@@ -15,21 +15,16 @@ public class User {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String email;
+    private String slackId;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String slackId;
-
     public static User toEntity(
-            String email,
             String password,
             String slackId
     ) {
         User user = new User();
-        user.email = email;
         user.password = password;
         user.slackId = slackId;
         return user;
