@@ -23,12 +23,12 @@ public class SlackService {
 
     private final Slack slack;
 
-    public void sendMessageToUser(String userId, String message) {
+    public void sendMessageToUser(String slackId, String message) {
         try {
             // DM 채널 열기
             ConversationsOpenResponse openResponse = slack.methods(botToken)
                     .conversationsOpen(ConversationsOpenRequest.builder()
-                            .users(List.of(userId))
+                            .users(List.of(slackId))
                             .build());
 
             if (openResponse.isOk()) {
@@ -40,12 +40,12 @@ public class SlackService {
                         .text(message)
                         .build());
 
-                log.info("✅ 슬랙 메세지 전송 완료: {}", userId);
+                log.info("✅ 슬랙 메세지 전송 완료: {}", slackId);
             } else {
                 log.error("❌ DM 채널 열기 실패: {}", openResponse.getError());
             }
         } catch (IOException | SlackApiException e) {
-            log.error("❌ 슬랙 메세지 전송 실패 - ID: {}, 메시지: {}", userId, message, e);
+            log.error("❌ 슬랙 메세지 전송 실패 - ID: {}, 메시지: {}", slackId, message, e);
         }
     }
 }
