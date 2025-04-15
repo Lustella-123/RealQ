@@ -11,4 +11,6 @@ public interface NotificationRegionRepository extends JpaRepository<Notification
     Optional<NotificationRegion> findByUserEmailAndRegionId(String email, Long regionId);
 
     List<NotificationRegion> findByUserEmail(String email);
+
+    List<NotificationRegion> findAllByEnabledTrue();
 }
