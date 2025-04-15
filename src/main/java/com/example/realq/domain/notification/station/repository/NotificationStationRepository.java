@@ -12,4 +12,6 @@ public interface NotificationStationRepository extends JpaRepository<Notificatio
 
     List<NotificationStation> findByUserEmail(String email);
 
+    List<NotificationStation> findAllByEnabledTrue();
+
 }

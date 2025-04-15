@@ -26,7 +26,7 @@ public class RealtimeRegionApiClient {
             String encodedRegion = URLEncoder.encode(region, StandardCharsets.UTF_8);
             String url = String.format(
                     "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty" +
-                            "?sidoName=%s&returnType=json&serviceKey=%s&ver=1.0",
+                            "?sidoName=%s&returnType=json&numOfRows=100&serviceKey=%s&ver=1.0",
                     encodedRegion, serviceKey
             );
             URI uri = new URI(url);
