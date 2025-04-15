@@ -34,19 +34,19 @@ public class NotificationRegionService {
             NotificationRegionCreateRequest requestDto,
             HttpSession session
     ) {
-        String email = (String) session.getAttribute("email");
+        String slackId = (String) session.getAttribute("slackId");
         Long regionId = requestDto.regionId();
         Integer pm10Threshold = requestDto.pm10Threshold();
         Integer pm25Threshold = requestDto.pm25Threshold();
 
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findBySlackId(slackId)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
         Region region = regionRepository.findById(regionId)
                 .orElseThrow(() -> new GlobalException(ErrorCode.STATION_NOT_FOUND));
 
-        Optional<NotificationRegion> existingNotification = notificationRegionRepository.findByUserEmailAndRegionId(
-                email,
+        Optional<NotificationRegion> existingNotification = notificationRegionRepository.findByUserSlackIdAndRegionId(
+                slackId,
                 regionId
         );
 
@@ -69,9 +69,9 @@ public class NotificationRegionService {
     @Transactional(readOnly = true)
     public List<NotificationRegionReadResponse> readAllNotificationRegions(HttpSession session) {
 
-        String email = (String) session.getAttribute("email");
+        String slackId = (String) session.getAttribute("slackId");
 
-        List<NotificationRegion> notificationRegionList = notificationRegionRepository.findByUserEmail(email);
+        List<NotificationRegion> notificationRegionList = notificationRegionRepository.findByUserSlackId(slackId);
 
         return notificationRegionList.stream().map(NotificationRegionReadResponse::toDto).toList();
     }
@@ -81,10 +81,10 @@ public class NotificationRegionService {
             NotificationRegionPatchRequest requestDto,
             HttpSession session
     ) {
-        String email = (String) session.getAttribute("email");
+        String slackId = (String) session.getAttribute("slackId");
         Long id = requestDto.id();
 
-        userRepository.findByEmail(email)
+        userRepository.findBySlackId(slackId)
                 .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
 
         NotificationRegion notificationRegion = notificationRegionRepository.findById(id)

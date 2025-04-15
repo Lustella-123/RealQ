@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface NotificationRegionRepository extends JpaRepository<NotificationRegion, Long> {
 
-    Optional<NotificationRegion> findByUserEmailAndRegionId(String email, Long regionId);
+    Optional<NotificationRegion> findByUserSlackIdAndRegionId(String slackId, Long regionId);
 
-    List<NotificationRegion> findByUserEmail(String email);
+    List<NotificationRegion> findByUserSlackId(String slackId);
 
     List<NotificationRegion> findAllByEnabledTrue();
 }

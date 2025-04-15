@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface NotificationStationRepository extends JpaRepository<NotificationStation, Long> {
 
-    Optional<NotificationStation> findByUserEmailAndStationId(String email, Long stationId);
+    Optional<NotificationStation> findByUserSlackIdAndStationId(String slackId, Long stationId);
 
-    List<NotificationStation> findByUserEmail(String email);
+    List<NotificationStation> findByUserSlackId(String slackId);
 
     List<NotificationStation> findAllByEnabledTrue();
 
