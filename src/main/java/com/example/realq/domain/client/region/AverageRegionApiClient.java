@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -17,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 public class AverageRegionApiClient {
 
     private final RestTemplate restTemplate;
+    private final WebClient webClient;
 
     @Value("${airkorea.api.service-key}")
     private String serviceKey;
@@ -31,11 +33,25 @@ public class AverageRegionApiClient {
                     encodedRegion, encodedPeriod, serviceKey
             );
             URI uri = new URI(url);
-            return restTemplate.getForEntity(uri, AverageRegionWrapper.class)
-                    .getBody()
-                    .response()
-                    .body()
-                    .items();
+            AverageRegionWrapper wrapper = restTemplate.getForEntity(uri, AverageRegionWrapper.class)
+                    .getBody();
+            return wrapper.response().body().items();
+
+//            AverageRegionWrapper responseWrapper = webClient.get()
+//                    .uri(uriBuilder -> uriBuilder
+//                            .scheme("http")
+//                            .host("apis.data.go.kr")
+//                            .path("/B552584/ArpltnStatsSvc/getCtprvnMesureSidoLIst")
+//                            .queryParam("sidoName", region)
+//                            .queryParam("returnType", "json")
+//                            .queryParam("searchCondition", period.name())
+//                            .queryParam("serviceKey", serviceKey)
+//                            .build())
+//                    .retrieve()
+//                    .bodyToMono(AverageRegionWrapper.class)
+//                    .block();
+//
+//            return responseWrapper.response().body().items();
         } catch (Exception e) {
             return new AverageRegionItem[0];
         }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -17,6 +18,7 @@ import java.util.List;
 public class RealtimeRegionApiClient {
 
     private final RestTemplate restTemplate;
+    private final WebClient webClient;
 
     @Value("${airkorea.api.service-key}")
     private String serviceKey;
@@ -31,7 +33,24 @@ public class RealtimeRegionApiClient {
             );
             URI uri = new URI(url);
             RealtimeRegionWrapper wrapper = restTemplate.getForEntity(uri, RealtimeRegionWrapper.class).getBody();
+
             return wrapper.response().body().items();
+
+//            RealtimeRegionWrapper responseWrapper = webClient.get()
+//                    .uri(uriBuilder -> uriBuilder
+//                            .scheme("http")
+//                            .host("apis.data.go.kr")
+//                            .path("/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty")
+//                            .queryParam("sidoName", encodedRegion)
+//                            .queryParam("returnType", "json")
+//                            .queryParam("serviceKey", serviceKey)
+//                            .queryParam("ver", "1.0")
+//                            .build())
+//                    .retrieve()
+//                    .bodyToMono(RealtimeRegionWrapper.class)
+//                    .block();
+//
+//            return responseWrapper.response().body().items();
         } catch (Exception e) {
             return List.of();
         }
