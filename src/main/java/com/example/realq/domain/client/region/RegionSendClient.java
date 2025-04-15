@@ -24,12 +24,12 @@ public class RegionSendClient {
     private final RegionGetClient regionGetClient;
     private final NotificationRegionRepository notificationRegionRepository;
 
-    @Scheduled(cron = "0 0 5,12,17 * * *")
+    @Scheduled(cron = "0 0 7,12,17 * * *")
     public void sendAverageRegion() {
         log.info("메서드 실행: sendAverageRegion");
 
         List<AverageRegion> averageRegionList = regionGetClient.getAverageRegion();
-        List<NotificationRegion> notificationRegionList = notificationRegionRepository.findAll();
+        List<NotificationRegion> notificationRegionList = notificationRegionRepository.findAllByEnabledTrue();
 
         Map<String, String> userSlackIdToMessage = fetchAlertTargets(notificationRegionList, averageRegionList);
 
@@ -43,7 +43,6 @@ public class RegionSendClient {
         Map<String, String> alertMap = new HashMap<>();
 
         for (NotificationRegion notification : notificationRegionList) {
-            if (!notification.isEnabled()) continue;
 
             averageRegionList.stream()
                     .filter(averageRegion -> averageRegion.getRegionName().equals(notification.getRegion().getName()))
