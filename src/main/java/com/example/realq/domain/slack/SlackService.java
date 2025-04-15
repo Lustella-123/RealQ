@@ -24,6 +24,8 @@ public class SlackService {
     private final Slack slack;
 
     public void sendMessageToUser(String slackId, String message) {
+        long start = System.nanoTime(); // 사용자별 시간 측정 시작
+
         try {
             // DM 채널 열기
             ConversationsOpenResponse openResponse = slack.methods(botToken)
@@ -40,7 +42,10 @@ public class SlackService {
                         .text(message)
                         .build());
 
-                log.info("✅ 슬랙 메세지 전송 완료: {}", slackId);
+                long end = System.nanoTime();
+                long durationS = (end - start) / 1_000_000_000;
+                long durationMs = (end - start) / 1_000_000;
+                log.info("✅ [전송 완료] {} ({} ms)", slackId, durationS, durationMs);
             } else {
                 log.error("❌ DM 채널 열기 실패: {}", openResponse.getError());
             }

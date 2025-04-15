@@ -2,8 +2,8 @@ package com.example.realq.domain.client.region;
 
 import com.example.realq.domain.average.region.SearchConditionEnum;
 import com.example.realq.domain.average.region.dto.response.AverageRegionItem;
-import com.example.realq.domain.realtime.region.repository.RegionRepository;
 import com.example.realq.domain.average.region.entity.AverageRegion;
+import com.example.realq.domain.realtime.region.repository.RegionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

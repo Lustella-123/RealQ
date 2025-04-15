@@ -1,9 +1,9 @@
 package com.example.realq.domain.average.region.service;
 
 import com.example.realq.domain.average.region.SearchConditionEnum;
-import com.example.realq.domain.client.region.AverageRegionApiClient;
 import com.example.realq.domain.average.region.dto.response.AverageRegionItem;
 import com.example.realq.domain.average.region.dto.response.AverageRegionResponse;
+import com.example.realq.domain.client.region.AverageRegionApiClient;
 import com.example.realq.global.error.ErrorCode;
 import com.example.realq.global.error.GlobalException;
 import lombok.RequiredArgsConstructor;
