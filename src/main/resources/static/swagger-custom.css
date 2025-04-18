@@ -1,0 +1,5 @@
+/* 글자가 세로로 출력되는 문제 해결용 */
+.swagger-ui .opblock-summary-path {
+    white-space: normal !important;
+    word-break: break-word;
+}
