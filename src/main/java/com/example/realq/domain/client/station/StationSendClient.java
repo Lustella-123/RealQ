@@ -54,6 +54,10 @@ public class StationSendClient {
             String stationName = notification.getStation().getName();
             AverageStation averageStation = stationNameToAverageStation.get(stationName);
 
+            if (averageStation == null) {
+                continue;
+            }
+
             int pm10 = parseOrDefault(averageStation.getPm10Value(), 301);
             int pm25 = parseOrDefault(averageStation.getPm25Value(), 151);
 
