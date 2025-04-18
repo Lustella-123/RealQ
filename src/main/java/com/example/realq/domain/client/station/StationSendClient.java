@@ -24,7 +24,7 @@ public class StationSendClient {
     private final StationGetClient stationGetClient;
     private final NotificationStationRepository notificationStationRepository;
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 7,12,17 * * *")
     public void sendAverageStation() {
         log.info("메서드 실행: sendAverageStation");
 

@@ -20,6 +20,11 @@ spring:
   config:
     import: optional:application-secret.yml
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    customCssUrl: /swagger-custom.css
+
 logging:
   level:
     org.hibernate.SQL: debug
