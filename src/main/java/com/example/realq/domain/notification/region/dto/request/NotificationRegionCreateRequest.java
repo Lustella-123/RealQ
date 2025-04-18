@@ -14,7 +14,7 @@ public record NotificationRegionCreateRequest(
 
         @NotNull(message = "초미세먼지 PM2.5 기준치는 필수 입력입니다.")
         @Min(value = 1, message = "초미세먼지 PM2.5 최솟값은 1 이상이어야 합니다.")
-        @Max(value = 150, message = "초미세먼지 PM2.5 최댓값은 300 이하이어야 합니다.")
+        @Max(value = 150, message = "초미세먼지 PM2.5 최댓값은 150 이하이어야 합니다.")
         Integer pm25Threshold
 ) {
 }
