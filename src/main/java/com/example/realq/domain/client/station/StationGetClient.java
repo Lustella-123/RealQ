@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -16,12 +18,12 @@ public class StationGetClient {
 
     private final AverageStationApiClient averageStationApiClient;
 
-    public List<AverageStation> getAverageStation() {
+    public Map<String, AverageStation> getAverageStation() {
         log.info("메서드 실행: getAverageStation");
 
         List<RealtimeRegionItem> realtimeRegionItemList = averageStationApiClient.getData();
 
-        List<AverageStation> averageStationList = new ArrayList<>();
+        Map<String, AverageStation> stationNameToAverageStation = new HashMap<>();
 
         realtimeRegionItemList.forEach(item -> {
             AverageStation averageStation = AverageStation.toEntity(
@@ -30,9 +32,9 @@ public class StationGetClient {
                     item.pm25Value()
             );
 
-            averageStationList.add(averageStation);
+            stationNameToAverageStation.put(item.stationName(), averageStation);
         });
 
-        return averageStationList;
+        return stationNameToAverageStation;
     }
 }

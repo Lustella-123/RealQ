@@ -24,17 +24,17 @@ public class StationSendClient {
     private final StationGetClient stationGetClient;
     private final NotificationStationRepository notificationStationRepository;
 
-    @Scheduled(cron = "0 0 7,12,17 * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void sendAverageStation() {
         log.info("메서드 실행: sendAverageStation");
 
         long totalStart = System.nanoTime(); // 전체 시간 측정 시작
 
-        List<AverageStation> averageStationList = stationGetClient.getAverageStation();
+        Map<String, AverageStation> stationNameToAverageStation = stationGetClient.getAverageStation();
 
         List<NotificationStation> notificationStationList = notificationStationRepository.findAllByEnabledTrue();
 
-        Map<String, String> userSlackIdToMessage = fetchAlertTargets(notificationStationList, averageStationList);
+        Map<String, String> userSlackIdToMessage = fetchAlertTargets(notificationStationList, stationNameToAverageStation);
 
         userSlackIdToMessage.forEach(slackService::sendMessageToUser);
 
@@ -46,26 +46,21 @@ public class StationSendClient {
 
     private Map<String, String> fetchAlertTargets(
             List<NotificationStation> notificationStationList,
-            List<AverageStation> averageStationList
+            Map<String, AverageStation> stationNameToAverageStation
     ) {
         Map<String, String> alertMap = new HashMap<>();
 
         for (NotificationStation notification : notificationStationList) {
-
             String stationName = notification.getStation().getName();
+            AverageStation averageStation = stationNameToAverageStation.get(stationName);
 
-            averageStationList.stream()
-                    .filter(averageStation -> averageStation.getStationName().equals(stationName))
-                    .findFirst()
-                    .ifPresent(averageStation -> {
-                        int pm10 = parseOrDefault(averageStation.getPm10Value(), 301);
-                        int pm25 = parseOrDefault(averageStation.getPm25Value(), 151);
+            int pm10 = parseOrDefault(averageStation.getPm10Value(), 301);
+            int pm25 = parseOrDefault(averageStation.getPm25Value(), 151);
 
-                        if (pm10 > notification.getPm10Threshold() || pm25 > notification.getPm25Threshold()) {
-                            String message = buildAlertMessage(stationName, pm10, pm25, notification);
-                            alertMap.put(notification.getUser().getSlackId(), message);
-                        }
-                    });
+            if (pm10 > notification.getPm10Threshold() || pm25 > notification.getPm25Threshold()) {
+                String message = buildAlertMessage(stationName, pm10, pm25, notification);
+                alertMap.put(notification.getUser().getSlackId(), message);
+            }
         }
 
         return alertMap;
